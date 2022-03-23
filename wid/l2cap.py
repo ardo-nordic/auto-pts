@@ -109,6 +109,7 @@ def hdl_wid_38(_: WIDParams):
     description: Upper Tester command IUT to send a nonsegmented LE data packet to the PTS with any values.
     """
     stack = get_stack()
+    stack.l2cap.wait_for_connection(0)
     channel = stack.l2cap.chan_lookup_id(0)
     if not channel:
         return False
@@ -171,6 +172,7 @@ def hdl_wid_43(_: WIDParams):
     """
     stack = get_stack()
     l2cap = stack.l2cap
+    l2cap.wait_for_connection(0)
     channel = l2cap.chan_lookup_id(0)
     if not channel:
         return False
@@ -271,6 +273,7 @@ def hdl_wid_56(_: WIDParams):
 def hdl_wid_57(_: WIDParams):
     stack = get_stack()
     l2cap = stack.l2cap
+    l2cap.wait_for_connection(0)
     channel = l2cap.chan_lookup_id(0)
     if not channel:
         return False
@@ -305,6 +308,11 @@ def hdl_wid_60(params: WIDParams):
                 return True
 
     return False
+
+
+def hdl_wid_61(_: WIDParams):
+    """description: Please confirm the IUT does not send the L2CAP Data to the Upper Tester."""
+    return True
 
 
 def hdl_wid_100(_: WIDParams):
@@ -438,6 +446,14 @@ def hdl_wid_137(_: WIDParams):
     return True
 
 
+def hdl_wid_138(_: WIDParams):
+    """"description: Please make sure an encryption requirement exists for a channel
+    L2CAP. When receiving Credit Based Connection Request from PTS, please respond with
+    Result 0x0008 (Insufficient Encryption)
+    """
+    return True
+
+
 def hdl_wid_251(_: WIDParams):
     # TODO: Fix to actually verify result of 'Insufficient Encryption' 0x0008 error
     return get_stack().l2cap.wait_for_disconnection(0, 30)
@@ -567,6 +583,11 @@ def hdl_wid_271(_: WIDParams):
     disconnected = get_stack().l2cap.wait_for_disconnection(0, 30)
     disconnected &= get_stack().l2cap.wait_for_disconnection(1, 30)
     return disconnected
+
+
+def hdl_wid_272(_: WIDParams):
+    """"description: Please press ok to disconnect the link."""
+    return True
 
 
 def hdl_wid_20001(_: WIDParams):

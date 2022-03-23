@@ -192,13 +192,22 @@ def test_cases(ptses):
         ZTestCase("L2CAP", "L2CAP/ECFC/BV-15-C",
                   pre_conditions_keysize,
                   generic_wid_hdl=l2cap_wid_hdl),
+        ZTestCase("L2CAP", "L2CAP/ECFC/BV-29-C",
+                  pre_conditions_success +
+                  [TestFunc(lambda: stack.l2cap.num_channels_set(1))],
+                  generic_wid_hdl=l2cap_wid_hdl),
         ZTestCase("L2CAP", "L2CAP/ECFC/BI-01-C",
                   pre_conditions_success +
                   [TestFunc(lambda: stack.l2cap.num_channels_set(1))],
                   generic_wid_hdl=l2cap_wid_hdl),
         ZTestCase("L2CAP", "L2CAP/ECFC/BI-02-C",
                   pre_conditions_success +
-                  [TestFunc(lambda: stack.l2cap.hold_credits_set(1))],
+                  [TestFunc(lambda: stack.l2cap.num_channels_set(1)),
+                   TestFunc(lambda: stack.l2cap.hold_credits_set(1))],
+                  generic_wid_hdl=l2cap_wid_hdl),
+        ZTestCase("L2CAP", "L2CAP/ECFC/BI-06-C",
+                  pre_conditions_success +
+                  [TestFunc(lambda: pts.update_pixit_param("L2CAP", "TSPX_l2ca_cbmps_min", format(63, '04x')))],
                   generic_wid_hdl=l2cap_wid_hdl),
         ZTestCase("L2CAP", "L2CAP/ECFC/BI-07-C",
                   pre_conditions_success +

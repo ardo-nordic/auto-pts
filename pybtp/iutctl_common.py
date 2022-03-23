@@ -205,7 +205,7 @@ class BTPWorker(BTPSocket):
                 raise BTPError("Error opcode in response!")
 
             if op != tuple_hdr.op:
-                raise BTPError(
+                logging.error(
                     "Invalid opcode 0x%.2x in the response, expected 0x%.2x!" %
                     (tuple_hdr.op, op))
 
